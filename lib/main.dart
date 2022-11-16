@@ -72,7 +72,8 @@ class _MyAppState extends State<MyApp> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        SaveTime = "${DateTime.now().hour < 10 ? "0${DateTime.now().hour}" : DateTime.now().hour} : ${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : DateTime.now().minute} : ${DateTime.now().second < 10 ? "0${DateTime.now().second}" : DateTime.now().second} ",
+                        SaveTime =
+                            "${DateTime.now().hour < 10 ? "0${DateTime.now().hour}" : DateTime.now().hour} : ${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : DateTime.now().minute} : ${DateTime.now().second < 10 ? "0${DateTime.now().second}" : DateTime.now().second} ",
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -104,17 +105,19 @@ class _MyAppState extends State<MyApp> {
                     "Save Data",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     setData() async {
                       SharedPreferences pref =
                           await SharedPreferences.getInstance();
 
-                      String mythoughts = pref.getString('mythoughts') ?? '';
-                      String currenttime = pref.getString('currenttime') ?? '';
-
-                      myThoughts = mythoughts;
-                      SaveTime = currenttime;
+                      await pref.setString('mythoughts', myThoughtscontroller.text) ?? '';
+                      await pref.setString('currenttime',"${DateTime.now().hour < 10 ? "0${DateTime.now().hour}" : DateTime.now().hour} : ${DateTime.now().minute < 10 ? "0${DateTime.now().minute}" : DateTime.now().minute} : ${DateTime.now().second < 10 ? "0${DateTime.now().second}" : DateTime.now().second}");
                     }
+                    SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+
+                    print(pref.getString('mythoughts'));
+                    print(pref.getString('currenttime'));
 
                     setState(() {
                       setData();
